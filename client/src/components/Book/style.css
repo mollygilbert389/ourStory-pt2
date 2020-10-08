@@ -1,0 +1,33 @@
+.bookDivContainer{
+    margin-top: 15%;
+    width: 1000px;
+    height: 800px;
+    background-image: url("../assets/book.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+}
+
+.leftSide {
+    margin: 20px;
+    width: 370px;
+    margin-top: 10%;
+    background-color: mediumseagreen;
+    height: 500px;
+    
+}
+
+.rightSide{
+    margin: 20px;
+    margin-top: 10%;
+    width: 370px;
+    background-color: aqua;
+    height: 500px;
+    
+}
+
+.mainDiv{
+    display: flex;
+    justify-content: center;
+}
