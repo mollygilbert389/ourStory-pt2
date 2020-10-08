@@ -3,8 +3,9 @@ import "./style.css";
 
 
 function Book(props){
-    const firstPage = props.bookData.slice(0,15)
-    const secondPage = props.bookData.slice(15)
+    const bookData = props.bookData.reverse()
+    const firstPage = bookData.slice(0,15)
+    const secondPage = bookData.slice(15)
     return (
       <div className="mainDiv">
         <div className="bookDivContainer">
