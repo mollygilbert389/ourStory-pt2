@@ -6,10 +6,12 @@ class WritingCenter extends Component {
     state = {
         showModal: false,
         showTextModal: false,
-        timer: "120",
+        timer: 120,
+        timerId: "",
+        timerStart: false,
         sentance: "",
         isLoaded: false,
-        currentSentences: []
+        currentSentences: [], 
     }
 
 
@@ -32,11 +34,41 @@ class WritingCenter extends Component {
       };
 
       handleSentanceSave = () => {
+        this.stopTimer()
         this.setState({
-            sentence: ""
+            sentence: "",
+            showTextModal: !this.state.showTextModal,
           });
       }
+
+      handleStart = () => {
+        this.setState({
+            showTextModal: !this.state.showTextModal,
+        })
+
+        this.startTimer()
+
+    }
     
+    startTimer = () => {
+        const timerId = setInterval(() => {
+            this.setState({
+                timer: this.state.timer - 1
+            })
+            }, 1000)
+
+            this.setState({
+                timerId
+            })
+    }
+
+    stopTimer = () => {
+        clearInterval(this.state.timerId)
+        this.setState({
+            timer: 120
+        })
+    }
+
 
 render() {  
     
@@ -53,7 +85,7 @@ render() {
                 </Modal.Header>
                 <Modal.Body>
                     <p>Click this start button and you will have 2 mins.</p>
-                    <Button onClick={this.handleTextModal}>Start</Button>
+                    <Button onClick={this.handleStart}>Start</Button>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleModal}>
