@@ -6,7 +6,12 @@ class WritingCenter extends Component {
     state = {
         showModal: false,
         showTextModal: false,
+        timer: "2:00",
+        sentance: "",
+        isLoaded: false,
+        currentSentences: []
     }
+
 
     handleModal = () => {
         this.setState({
@@ -20,11 +25,29 @@ class WritingCenter extends Component {
         })
     }
 
-render() {   
+    handleInputChange = (event) => {
+        this.setState({
+          sentence: event.target.value
+        });
+      };
+
+      handleSentanceSave = () => {
+        this.setState({
+            sentence: ""
+          });
+      }
+    
+
+render() {  
+    
     return (
+        
             <div className="container">
             <Button onClick={this.handleModal} className="firstModal">Let's Get Started</Button>
-            <Modal show={this.state.showModal} onHide={this.handleModal}>
+            <Modal
+            className="d-flex flex-column align-items-center" 
+            show={this.state.showModal} 
+            onHide={this.handleModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Now when you click the start button you will be able to add your sentance in here.</Modal.Title>
                 </Modal.Header>
@@ -42,16 +65,25 @@ render() {
             <Modal show={this.state.showTextModal} onHide={this.handleTextModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <p>Add your Text here</p>
-                        <div>Time Remaining: 10</div>
+                        <p>Add your sentance here</p>
+                        <div>Time Remaining: {this.state.timer}</div>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <textarea className="textArea"></textarea>
+                    <div className="form-group">
+                        <input 
+                        name="sentence" 
+                        placeholder="Your Contribution (160 characters max)"
+                        required="true" 
+                        maxlength="160" 
+                        className="form-control"
+                        onChange={this.handleInputChange}
+                        />
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleTextModal}>
-                    Close
+                <Button variant="secondary" onClick={this.handleSentanceSave}>
+                    Save
                 </Button>
                 </Modal.Footer>
             </Modal>
