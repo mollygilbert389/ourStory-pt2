@@ -39,16 +39,11 @@ class Home extends Component {
     loadSentences.call(this)
 }
 
-//   setSentenceData = (destination, value) => {
-//     const{onSetSentenceData}=this.props
-//     onSetSentenceData(destination, value)
-// }
-
   render() {
   return (
     <div>
       <WritingCenter
-      setSentenceData={this.setSentenceData}
+      // setSentenceData={this.setSentenceData}
       >
       </WritingCenter>
       <Book

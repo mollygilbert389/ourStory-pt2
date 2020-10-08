@@ -6,7 +6,7 @@ class WritingCenter extends Component {
     state = {
         showModal: false,
         showTextModal: false,
-        timer: "2:00",
+        timer: "120",
         sentance: "",
         isLoaded: false,
         currentSentences: []
@@ -66,7 +66,7 @@ render() {
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <p>Add your sentance here</p>
-                        <div>Time Remaining: {this.state.timer}</div>
+                        <div>Time Remaining: {this.state.timer} seconds</div>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

@@ -1,21 +1,22 @@
-import React, {Component} from "react";
+import React from "react";
 import "./style.css";
 
-class Book extends Component {
-  render() {
+
+function Book(props){
+    const firstPage = props.bookData.slice(0,15)
+    const secondPage = props.bookData.slice(15)
     return (
       <div className="mainDiv">
         <div className="bookDivContainer">
             <div className="rightSide">
-                {this.props.bookData.map(item => {return ` ${item.sentence}`})}
+                {firstPage.map(item => {return ` ${item.sentence}`})}
             </div>
             <div className="leftSide">
-                Left side of book
+                {secondPage.map(item => {return ` ${item.sentence}`})}
             </div>
         </div>
       </div>
     );
-  }
 }
 
 export default Book;
