@@ -46,6 +46,8 @@ class WritingCenter extends Component {
             author: "someone new"
           })
             .catch(err => console.log(err));
+
+            window.location.reload()
       }
 
       handleStart = () => {
