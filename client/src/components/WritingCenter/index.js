@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { Button, Modal } from 'react-bootstrap';
+import API from "../../utils/API"
 import "./style.css";
 
 class WritingCenter extends Component {
@@ -9,7 +10,7 @@ class WritingCenter extends Component {
         timer: 120,
         timerId: "",
         timerStart: false,
-        sentance: "",
+        sentence: "",
         isLoaded: false,
         currentSentences: [], 
     }
@@ -33,12 +34,18 @@ class WritingCenter extends Component {
         });
       };
 
-      handleSentanceSave = () => {
+      handleSentenceSave = () => {
         this.stopTimer()
         this.setState({
             sentence: "",
             showTextModal: !this.state.showTextModal,
           });
+
+          API.saveSentence({
+            sentence: this.state.sentence,
+            author: "someone new"
+          })
+            .catch(err => console.log(err));
       }
 
       handleStart = () => {
@@ -81,7 +88,7 @@ render() {
             show={this.state.showModal} 
             onHide={this.handleModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Now when you click the start button you will be able to add your sentance in here.</Modal.Title>
+                    <Modal.Title>Now when you click the start button you will be able to add your sentence in here.</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <p>Click this start button and you will have 2 mins.</p>
@@ -97,7 +104,7 @@ render() {
             <Modal show={this.state.showTextModal} onHide={this.handleTextModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <p>Add your sentance here</p>
+                        <p>Add your sentence here</p>
                         <div>Time Remaining: {this.state.timer} seconds</div>
                     </Modal.Title>
                 </Modal.Header>
@@ -114,7 +121,7 @@ render() {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleSentanceSave}>
+                <Button variant="secondary" onClick={this.handleSentenceSave}>
                     Save
                 </Button>
                 </Modal.Footer>

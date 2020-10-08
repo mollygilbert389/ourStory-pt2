@@ -39,6 +39,7 @@ class Home extends Component {
     loadSentences.call(this)
 }
 
+
   render() {
   return (
     <div>
