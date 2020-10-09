@@ -57,6 +57,8 @@ class WritingCenter extends Component {
 
         this.startTimer()
 
+
+
     }
     
     startTimer = () => {
@@ -69,6 +71,8 @@ class WritingCenter extends Component {
             this.setState({
                 timerId
             })
+
+
     }
 
     stopTimer = () => {
@@ -78,8 +82,19 @@ class WritingCenter extends Component {
         })
     }
 
+    checkTimer = () => {
+        if (this.state.timer <= 0) {
+            this.stopTimer()
+            this.setState({
+                showTextModal: !this.state.showTextModal,
+            })
+        }
+    }
+
 
 render() {  
+
+    this.checkTimer()
     
     return (
         
