@@ -32,9 +32,9 @@ class WritingCenter extends Component {
         this.setState({
           sentence: event.target.value
         });
-      };
+    };
 
-      handleSentenceSave = () => {
+    handleSentenceSave = () => {
         this.stopTimer()
         this.setState({
             sentence: "",
@@ -48,17 +48,13 @@ class WritingCenter extends Component {
             .catch(err => console.log(err));
 
             window.location.reload()
-      }
+    }
 
-      handleStart = () => {
+    handleStart = () => {
         this.setState({
             showTextModal: !this.state.showTextModal,
         })
-
         this.startTimer()
-
-
-
     }
     
     startTimer = () => {
@@ -71,8 +67,6 @@ class WritingCenter extends Component {
             this.setState({
                 timerId
             })
-
-
     }
 
     stopTimer = () => {
@@ -93,12 +87,10 @@ class WritingCenter extends Component {
 
 
 render() {  
-
     this.checkTimer()
     
     return (
-        
-            <div className="container">
+        <div className="container">
             <Button onClick={this.handleModal} className="firstModal">Let's Get Started</Button>
             <Modal
             className="d-flex flex-column align-items-center" 

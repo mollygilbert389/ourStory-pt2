@@ -4,6 +4,7 @@ import {bindActionCreators} from "redux"
 import Book from "../components/Book"
 import API from "../utils/API";
 import WritingCenter from "../components/WritingCenter"
+import Profile from "../components/Profile"
 import "./style.css";
 
 import {
@@ -43,6 +44,7 @@ class Home extends Component {
   render() {
   return (
     <div>
+      <Profile></Profile>
       <WritingCenter
       // setSentenceData={this.setSentenceData}
       >
