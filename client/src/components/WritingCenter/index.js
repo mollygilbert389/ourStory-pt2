@@ -90,55 +90,58 @@ render() {
     this.checkTimer()
     
     return (
-        <div className="container">
-            <Button 
-            onClick={this.handleModal} 
-            className="firstModal mainBtn white"
-            size="lg"
-            >Let's Get Started</Button>
-            <Modal
-            className="d-flex flex-column align-items-center" 
-            show={this.state.showModal} 
-            onHide={this.handleModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Now when you click the start button you will be able to add your sentence in here.</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Click this start button and you will have 2 mins.</p>
-                    <Button onClick={this.handleStart}>Start</Button>
-                </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleModal}>
-                    Close
-                </Button>
-                </Modal.Footer>
-            </Modal>
+        <div>
+             <p className="misson">Now that you've logged in, have you thought of a sentance you'd like to add? You only get one chances so make it count! Use our dictionary and thesaurus resources if you need help!</p>
+            <div className="container">
+                <Button 
+                onClick={this.handleModal} 
+                className="firstModal mainBtn white"
+                size="lg"
+                >Let's Get Started</Button>
+                <Modal
+                className="d-flex flex-column align-items-center" 
+                show={this.state.showModal} 
+                onHide={this.handleModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Now when you click the start button you will be able to add your sentence in here.</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Click this start button and you will have 2 mins.</p>
+                        <Button className="white" onClick={this.handleStart}>Start</Button>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="danger" onClick={this.handleModal}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
 
-            <Modal show={this.state.showTextModal} onHide={this.handleTextModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>
-                        <p>Add your sentence here</p>
-                        <div>Time Remaining: {this.state.timer} seconds</div>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <div className="form-group">
-                        <input 
-                        name="sentence" 
-                        placeholder="Your Contribution (160 characters max)"
-                        required="true" 
-                        maxlength="160" 
-                        className="form-control"
-                        onChange={this.handleInputChange}
-                        />
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleSentenceSave}>
-                    Save
-                </Button>
-                </Modal.Footer>
-            </Modal>
+                <Modal show={this.state.showTextModal} onHide={this.handleTextModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>
+                            <p>Add your sentence here</p>
+                            <div>Time Remaining: {this.state.timer} seconds</div>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="form-group">
+                            <input 
+                            name="sentence" 
+                            placeholder="Your Contribution (160 characters max)"
+                            required="true" 
+                            maxlength="160" 
+                            className="form-control"
+                            onChange={this.handleInputChange}
+                            />
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="success" className="white" onClick={this.handleSentenceSave}>
+                        Save!
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </div>
     )}}
 

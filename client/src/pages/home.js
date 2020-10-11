@@ -51,8 +51,8 @@ class Home extends Component {
       <div className="centerItems">
         <Login></Login>
       </div>
-      <Dictionary></Dictionary>
-      {this.props.book.userData.name && (<WritingCenter></WritingCenter>)}
+      
+      {this.props.book.userData.name && (<div><Dictionary></Dictionary> <WritingCenter></WritingCenter></div>)}
       <Book
       bookData={this.state.currentSentences}
       >

@@ -9,6 +9,7 @@ class Dictionary extends Component {
         message: [],
         synonyms: [],
         definitions: [],
+        open: false
     }
     
     searchWord = (event) => {
@@ -16,6 +17,10 @@ class Dictionary extends Component {
         let key = ""
         let url = ""
         let word = this.state.wordInput.trim() 
+        this.setState({
+            synonyms: [],
+            definitions: [],
+        })
 
         if(selection === "dictionary") {
             console.log("dic")
@@ -29,20 +34,20 @@ class Dictionary extends Component {
             url = "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/" + word + "?key=" + key 
         }
 
-
-        
         axios.get(url)
         .then(response => {
             console.log(response)
             if(response.data[0]) {
                 if (selection === "dictionary") {
                     this.setState({
-                        definitions: response.data[0].shortdef
+                        definitions: response.data[0].shortdef,
+                        synonyms: ""
                     })
                 } 
                 if (selection === "thesaurus") {
                     this.setState({
-                        synonyms: response.data[0].meta.syns[0]
+                        synonyms: response.data[0].meta.syns[0],
+                        definition: ""
                     })
                 }
 
@@ -61,50 +66,62 @@ class Dictionary extends Component {
         })
     }
 
+    handleDictionary = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
 render() {
     return (
-      <div>
-          <Button className="dictionaryBtn white">Dictionary</Button>
+      <div className="dictionaryTab">
+          <Button className="dictionaryBtn white" onClick={this.handleDictionary}>Dictionary</Button>
           <div>
 
-            <Card border="primary" style={{ width: '18rem' }}>
-                <Card.Header>Dictionary</Card.Header>
-                <Card.Body>
-                <Card.Title>Search for words below.</Card.Title>
-                <Tabs defaultActiveKey="dictionary" id="uncontrolled-tab-example">
-                    <Tab eventKey="dictionary" title="Dictionary">
-                        <br></br>
-                        <div className="miniForm">
-                            <Form.Control type="word" placeholder="word" value={this.state.value} onChange={this.handleChange}/>
-                            <Button name="dictionary"
-                            variant="primary"
-                            onClick={this.searchWord}
-                            >Search</Button>
-                        </div>
-                        <br></br>
+           {this.state.open && (
+               <div className="cardContainer">
+                    <Card border="primary" style={{ width: '18rem' }}>
+                        <Card.Header>Dictionary</Card.Header>
+                        <Card.Body>
+                        <Card.Title>Search for words below.</Card.Title>
+                        <Tabs defaultActiveKey="dictionary" id="uncontrolled-tab-example">
+                            <Tab eventKey="dictionary" title="Dictionary">
+                                <br></br>
+                                <div className="miniForm">
+                                    <Form.Control type="word" placeholder="word" value={this.state.value} onChange={this.handleChange}/>
+                                    <Button name="dictionary"
+                                    variant="primary" 
+                                    className="white"
+                                    onClick={this.searchWord}
+                                    >Search</Button>
+                                </div>
+                                <br></br>
 
-                    </Tab>
-                    <Tab eventKey="thesaurus" title="Thesaurus">
-                        <br></br>
-                        <div className="miniForm">
-                            <Form.Control type="word" placeholder="word" value={this.state.value} onChange={this.handleChange}/>
-                            <Button name="thesaurus"
-                            variant="primary"
-                            onClick={this.searchWord}
-                            >Search</Button>
-                        </div>
-                        <br></br>
-                    </Tab>
-                </Tabs>
+                            </Tab>
+                            <Tab eventKey="thesaurus" title="Thesaurus">
+                                <br></br>
+                                <div className="miniForm">
+                                    <Form.Control type="word" placeholder="word" value={this.state.value} onChange={this.handleChange}/>
+                                    <Button name="thesaurus"
+                                    className="white"
+                                    variant="primary"
+                                    onClick={this.searchWord}
+                                    >Search</Button>
+                                </div>
+                                <br></br>
+                            </Tab>
+                        </Tabs>
 
-                <Card.Text>
-                            {this.state.definitions && (this.state.definitions.map((definition, index) => {return <div><strong>Definition {index +1}: </strong>{definition}</div>}))}
-                            {this.state.synonyms && (this.state.synonyms.map((synonym) => {return <div className="giveMeSpace">{synonym}</div>}))}
-                        </Card.Text>
+                        <Card.Text>
+                                    {this.state.definitions && (this.state.definitions.map((definition, index) => {return <div><strong>Definition {index +1}: </strong>{definition}</div>}))}
+                                    {this.state.synonyms && (this.state.synonyms.map((synonym) => {return <div className="giveMeSpace">{synonym}</div>}))}
+                                </Card.Text>
 
-                <Button variant="danger">Close</Button>
-                </Card.Body>
-            </Card>
+                        <Button variant="danger" onClick={this.handleDictionary}>Close</Button>
+                        </Card.Body>
+                    </Card>
+                </div>
+            )}
           </div>
       </div>
     );
