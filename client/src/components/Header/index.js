@@ -6,7 +6,7 @@ import Login from "../Login"
 import Logout from "../Logout"
 import {useAuth0} from "@auth0/auth0-react"
 
-function Header() {
+function Header(props) {
   const {user, isAuthenticated} = useAuth0();
   return (
     <div>
@@ -15,7 +15,8 @@ function Header() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Login></Login>
+            <Login
+            ></Login>
           </Nav>
           <Nav>
             {isAuthenticated && (<a className="navbar-brand">{user.name}</a>)}

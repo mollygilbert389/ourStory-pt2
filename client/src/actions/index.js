@@ -8,3 +8,4 @@ export const setSentenceData = (destination, value) => ({
     destination,
     value
 })
+

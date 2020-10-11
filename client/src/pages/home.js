@@ -44,7 +44,7 @@ class Home extends Component {
   render() {
   return (
     <div>
-      <Profile></Profile>
+      {/* <Profile></Profile> */}
       <WritingCenter
       // setSentenceData={this.setSentenceData}
       >

@@ -1,10 +1,12 @@
 import {
     SET_SENTENCE_DATA,
+    // SAVE_USER_DATA,
 
   } from '../actions/constant'
   
   const initialState = {
-      sentenceData: [] 
+      sentenceData: [],
+      userData: {},
   }
   
   export default function(state = initialState, action) {
@@ -14,6 +16,11 @@ import {
               ...state,
               sentenceData: action.payload  
             }
+            case "SAVE_USER_DATA": 
+            return {
+                ...state,
+                userData: action.user  
+              }
           default: 
               return state
       } 
