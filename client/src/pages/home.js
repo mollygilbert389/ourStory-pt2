@@ -4,12 +4,14 @@ import {bindActionCreators} from "redux"
 import Book from "../components/Book"
 import API from "../utils/API";
 import WritingCenter from "../components/WritingCenter"
-import Profile from "../components/Profile"
+import Login from "../components/Login"
+import Dictionary from "../components/Dictionary"
+import {useAuth0} from "@auth0/auth0-react"
 import "./style.css";
 
-import {
-  setSentenceData,
-} from "../actions/index"
+// import {
+//   setSentenceData,
+// } from "../actions/index"
 
 class Home extends Component {
   state = {
@@ -42,13 +44,15 @@ class Home extends Component {
 
 
   render() {
+    
   return (
     <div>
-      {/* <Profile></Profile> */}
-      <WritingCenter
-      // setSentenceData={this.setSentenceData}
-      >
-      </WritingCenter>
+      {!this.props.book.userData.name && (<div className="misson">Welcome to OurStory! This is a community book writing experiment where users from all over can come and make a single contribution to the book below. You can stay here and read OurStory, or you can sign in and make your own contribution!</div>)}
+      <div className="centerItems">
+        <Login></Login>
+      </div>
+      <Dictionary></Dictionary>
+      {this.props.book.userData.name && (<WritingCenter></WritingCenter>)}
       <Book
       bookData={this.state.currentSentences}
       >

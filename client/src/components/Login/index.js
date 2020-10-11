@@ -8,9 +8,9 @@ function Login(){
     return (
       !isAuthenticated && 
         (<div>
-            <Button variant="warning"
+            <Button className="white mainBtn" variant="success" size="lg"
               onClick={() => loginWithRedirect()}
-            >Login
+            >LOGIN
             </Button>
         </div>)
     );

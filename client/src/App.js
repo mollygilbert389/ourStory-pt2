@@ -17,7 +17,6 @@ function App() {
   const {user, isAuthenticated} = useAuth0();
   const savetoRedux = () => {
     if (user) {
-      console.log(user)
       store.dispatch({type:"SAVE_USER_DATA", user})
     }
   }
@@ -28,7 +27,7 @@ function App() {
       <Router>
         <div>
           <Header
-          // onSaveUserData={(userData)=>store.dispatch({type:"SAVE_USER_DATA", userData})}
+
           />
           <div className="container">
             <Route path="/" component={Home} />

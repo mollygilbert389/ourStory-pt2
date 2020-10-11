@@ -1,0 +1,18 @@
+.dictionaryBtn {
+    position: absolute;
+    left: 0;
+    transform: rotate(90deg);
+}
+
+.miniForm {
+    display: flex;
+    justify-content: center;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-delay: .5s;
+    animation-iteration-count: infinite;
+}
+
+.giveMeSpace{
+    margin: 5px;
+}

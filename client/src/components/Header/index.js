@@ -1,10 +1,10 @@
 import React from "react";
 // import {Navbar} from "react-bootstrap"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Navbar, Nav } from 'react-bootstrap';
-import Login from "../Login"
+import {Navbar, Nav } from 'react-bootstrap';
 import Logout from "../Logout"
 import {useAuth0} from "@auth0/auth0-react"
+import "./style.css"
 
 function Header(props) {
   const {user, isAuthenticated} = useAuth0();
@@ -15,11 +15,9 @@ function Header(props) {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Login
-            ></Login>
           </Nav>
           <Nav>
-            {isAuthenticated && (<a className="navbar-brand">{user.name}</a>)}
+            {isAuthenticated && (<a className="navbar-brand white">{user.name}</a>)}
           </Nav>
           <Nav>
             <Logout></Logout>

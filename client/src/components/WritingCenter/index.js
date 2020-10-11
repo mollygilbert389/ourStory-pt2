@@ -91,7 +91,11 @@ render() {
     
     return (
         <div className="container">
-            <Button onClick={this.handleModal} className="firstModal">Let's Get Started</Button>
+            <Button 
+            onClick={this.handleModal} 
+            className="firstModal mainBtn white"
+            size="lg"
+            >Let's Get Started</Button>
             <Modal
             className="d-flex flex-column align-items-center" 
             show={this.state.showModal} 
