@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/home"
-import Nav from "./components/Nav";
+import Header from "./components/Header";
 import Footer from "./components/Footer"
 import "./app.css"
+import "./scss/Custom.scss"
 
 import {Provider} from "react-redux"
 import store from "./store"
@@ -14,7 +15,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <div>
-          <Nav/>
+          <Header/>
           <div className="container">
             <Route path="/" component={Home} />
             {/* <Route exact path="/team" component={Team} /> */}

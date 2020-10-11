@@ -7,7 +7,7 @@ function Login(){
     return (
       isAuthenticated && 
       (<div>
-          <Button
+          <Button variant="warning"
             onClick={() => logout()}
           >Logout
           </Button>
