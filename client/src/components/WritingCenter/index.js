@@ -121,7 +121,6 @@ render() {
                     </Modal.Header>
                     <Modal.Body>
                         <p>Click this start button and you will have 2 mins.</p>
-                        {/* <Button className="white" onClick={this.handleStart}>Start</Button> */}
                         <StartBtn 
                         onHandleClick={this.handleStart}
                         setIsEditing={this.props.setIsEditing}
