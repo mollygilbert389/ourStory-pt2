@@ -1,6 +1,10 @@
 import React, {Component} from "react";
 import { Button, Modal } from 'react-bootstrap';
+import StartBtn from "../StartBtn"
+import CloseBtn from "../CloseBtn"
 import API from "../../utils/API"
+import io from 'socket.io-client'
+
 import "./style.css";
 
 class WritingCenter extends Component {
@@ -24,8 +28,10 @@ class WritingCenter extends Component {
 
     handleTextModal = () => {
         this.setState({
-            showTextModal: !this.state.showTextModal
+            showTextModal: !this.state.showTextModal,
+            isEditing: false
         })
+
     }
 
     handleInputChange = (event) => {
@@ -41,6 +47,8 @@ class WritingCenter extends Component {
             showTextModal: !this.state.showTextModal,
           });
 
+          this.props.setIsEditing("isEditing", false)
+
           API.saveSentence({
             sentence: this.state.sentence,
             author: "someone new"
@@ -54,7 +62,7 @@ class WritingCenter extends Component {
         this.setState({
             showTextModal: !this.state.showTextModal,
         })
-        this.startTimer()
+        // this.startTimer()
     }
     
     startTimer = () => {
@@ -85,6 +93,12 @@ class WritingCenter extends Component {
         }
     }
 
+    // checkStatus = () => {
+    //     if() {
+
+    //     }
+    // }
+
 
 render() {  
     this.checkTimer()
@@ -107,7 +121,12 @@ render() {
                     </Modal.Header>
                     <Modal.Body>
                         <p>Click this start button and you will have 2 mins.</p>
-                        <Button className="white" onClick={this.handleStart}>Start</Button>
+                        {/* <Button className="white" onClick={this.handleStart}>Start</Button> */}
+                        <StartBtn 
+                        onHandleClick={this.handleStart}
+                        setIsEditing={this.props.setIsEditing}
+                        book={this.props.book}
+                        ></StartBtn>
                     </Modal.Body>
                     <Modal.Footer>
                     <Button variant="danger" onClick={this.handleModal}>
@@ -136,9 +155,10 @@ render() {
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="success" className="white" onClick={this.handleSentenceSave}>
+                    {/* <Button variant="success" className="white" onClick={this.handleSentenceSave}>
                         Save!
-                    </Button>
+                    </Button> */}
+                    <CloseBtn  onHandleClick={this.handleSentenceSave}></CloseBtn>
                     </Modal.Footer>
                 </Modal>
             </div>

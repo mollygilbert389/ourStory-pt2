@@ -31,7 +31,6 @@ function App() {
           />
           <div className="container">
             <Route path="/" component={Home} />
-            {/* <Route exact path="/team" component={Team} /> */}
           </div>
           <Footer></Footer>
         </div>

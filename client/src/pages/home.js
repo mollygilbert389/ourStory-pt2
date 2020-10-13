@@ -9,9 +9,9 @@ import Dictionary from "../components/Dictionary"
 import {useAuth0} from "@auth0/auth0-react"
 import "./style.css";
 
-// import {
-//   setSentenceData,
-// } from "../actions/index"
+import {
+  setIsEditing,
+} from "../actions/index"
 
 class Home extends Component {
   state = {
@@ -42,6 +42,10 @@ class Home extends Component {
     loadSentences.call(this)
 }
 
+setIsEditing = (destination, value) => {
+  const{onSetIsEditing}=this.props
+  onSetIsEditing(destination, value)
+}
 
   render() {
     
@@ -52,7 +56,13 @@ class Home extends Component {
         <Login></Login>
       </div>
       
-      {this.props.book.userData.name && (<div><Dictionary></Dictionary> <WritingCenter></WritingCenter></div>)}
+      {this.props.book.userData.name && (<div>
+        <Dictionary></Dictionary> 
+        <WritingCenter
+        setIsEditing={this.setIsEditing}
+        book={this.props.book}
+        ></WritingCenter>
+        </div>)}
       <Book
       bookData={this.state.currentSentences}
       >
@@ -67,7 +77,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchtoProps = (dispatch) => ({
-  // onSetSentenceData: bindActionCreators(setSentenceData, dispatch),
+  onSetIsEditing: bindActionCreators(setIsEditing, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(Home);

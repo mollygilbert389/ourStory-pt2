@@ -1,12 +1,13 @@
 import {
     SET_SENTENCE_DATA,
-    // SAVE_USER_DATA,
+    SET_IS_EDITING,
 
   } from '../actions/constant'
   
   const initialState = {
       sentenceData: [],
       userData: {},
+      isEditing: false,
   }
   
   export default function(state = initialState, action) {
@@ -21,6 +22,11 @@ import {
                 ...state,
                 userData: action.user  
               }
+              case SET_IS_EDITING: 
+              return {
+                  ...state,
+                  [action.destination]: action.value
+                }
           default: 
               return state
       } 

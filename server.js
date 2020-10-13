@@ -1,24 +1,40 @@
 const express = require("express");
-
 const mongoose = require("mongoose");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
+const server = app.listen(PORT);
+const io = require('socket.io').listen(server);
+// const socketio = require('socket.io');
+// const http = require('http')
+// const server = http.createServer(app)
+// const io = socketio(server)
 
-// Define middleware here
+io.on("connection", (socket) => {
+  console.log("new connection!")
+
+  socket.on('start', ({isEditing}) => {
+    console.log(isEditing)
+  })
+
+  socket.on("disconnect", () => {
+    console.log("we lost a connection!")
+  })
+})
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Serve up static assets (usually on heroku)
+
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-// Add routes, both API and view
+
 app.use(routes);
 
-// Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/ourstory");
 
-// Start the API server
-app.listen(PORT, function() {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
+// app.listen(PORT, function() {
+//   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+// });
+
