@@ -13,56 +13,23 @@ import {
   setIsEditing,
 } from "../actions/index"
 
-// class Home extends Component {
-  // state = {
-  //   currentSentences: []
-  // }
-
-  function Home(props){
+function Home(props){
     const [sentences, setSentences] = useState([])
 
-//   const something = () => {
-//     function loadSentences() {
-//     API.getSentences()
-//       .then(res => res.data)
-//       .then(
-//         (result) => {
-//           this.setState({
-//             isLoaded: true,
-//             currentSentences: result
-//           });
-//         },
-//         (error) => {
-//           this.setState({
-//             isLoaded: true,
-//             error
-//           });
-//         }
-//       )
-//       .catch(err => console.log(err));
-//     }
-    
-//     loadSentences.call(this)
-// }
+    useEffect(() => {
+      API.getSentences()
+        .then(res => res.data)
+        .then(
+          (result) => {
+            setSentences(result)
+          })
+        .catch(err => console.log(err));
+    }, [setSentences, sentences]);
 
-  useEffect(() => {
-    API.getSentences()
-      .then(res => res.data)
-      .then(
-        (result) => {
-          setSentences(result)
-          // this.setState({
-          //   isLoaded: true,
-          //   currentSentences: result
-          // });
-        })
-      .catch(err => console.log(err));
-  }, [setSentences, sentences]);
-
-const setIsEditing = (destination, value) => {
-  const{onSetIsEditing}=props
-  onSetIsEditing(destination, value)
-}
+    const setIsEditing = (destination, value) => {
+      const{onSetIsEditing}=props
+      onSetIsEditing(destination, value)
+    }
 
   return (
     <div>

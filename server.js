@@ -13,8 +13,6 @@ io.on("connection", (socket) => {
     console.log(isEditing)
     socket.join('ourStory')
 
-    
-
     let checkMessage = ''
     let disabled=false
         
@@ -28,8 +26,7 @@ io.on("connection", (socket) => {
           disabled=false
         }
 
-        console.log(checkMessage)
-        // io.to('ourStory').emit('storyData', {message: checkMessage, disabled: disabled})
+        io.to('ourStory').emit('storyData', {message: checkMessage, disabled: disabled})
         socket.to('ourStory').emit('message', {message: checkMessage, disabled})
 
       //   socket.on("disconnect", () => {

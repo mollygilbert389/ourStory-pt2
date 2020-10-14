@@ -7,6 +7,7 @@ import io from 'socket.io-client'
 
 import "./style.css";
 
+let socket;
 
 function WritingCenter(props){
     const [showModal, setShowModal] = useState(false)
@@ -14,6 +15,9 @@ function WritingCenter(props){
     const [timer, setTimer] = useState(120)
     const [startTimer, setStartTimer] = useState(false)
     const [sentence, setSentence] = useState("")
+    const [isEditing, setEditStatus] = useState(false)
+    const [message, setMessage] = useState('')
+    const ENDPOINT = "localhost:3000" 
 
 
     const handleModal = () => {
@@ -40,8 +44,6 @@ function WritingCenter(props){
             author: "someone new"
           })
             .catch(err => console.log(err));
-
-            // window.location.reload()
     }
 
    const handleStart = () => {
@@ -70,6 +72,19 @@ function WritingCenter(props){
         setTimer(120)
     }
 
+    useEffect(() => {
+        socket = io(ENDPOINT);
+
+        socket=io(ENDPOINT)
+        console.log(socket)
+
+        socket.emit('checkStart', {isEditing}, () => {        
+            socket.on('message', (message) => {
+                setMessage(message)
+            })
+        })
+    }, [ENDPOINT])
+
     
     return (
         <div>
@@ -89,10 +104,14 @@ function WritingCenter(props){
                     </Modal.Header>
                     <Modal.Body>
                         <p>Click this start button and you will have 2 mins.</p>
+
+                        <p>{message}</p>
                         <StartBtn 
                         onHandleClick={() => handleStart()}
+                        // setEditStatus={() => setEditStatus()}
                         setIsEditing={props.setIsEditing}
                         book={props.book}
+                        disabled={isEditing}
                         ></StartBtn>
                     </Modal.Body>
                     <Modal.Footer>
