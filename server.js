@@ -5,16 +5,36 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT);
 const io = require('socket.io').listen(server);
-// const socketio = require('socket.io');
-// const http = require('http')
-// const server = http.createServer(app)
-// const io = socketio(server)
 
 io.on("connection", (socket) => {
   console.log("new connection!")
 
-  socket.on('start', ({isEditing}) => {
+  socket.on('checkStart', ({isEditing}) => {
     console.log(isEditing)
+    socket.join('ourStory')
+
+    
+
+    let checkMessage = ''
+    let disabled=false
+        
+        if(isEditing) {
+          checkMessage = "Sorry someone is currently editing. Try again later."
+          disabled=true
+        }
+
+        if (!isEditing) {
+          checkMessage = "You are good to edit!"
+          disabled=false
+        }
+
+        console.log(checkMessage)
+        // io.to('ourStory').emit('storyData', {message: checkMessage, disabled: disabled})
+        socket.to('ourStory').emit('message', {message: checkMessage, disabled})
+
+      //   socket.on("disconnect", () => {
+      //   console.log("we lost a connection!")
+      // })
   })
 
   socket.on("disconnect", () => {

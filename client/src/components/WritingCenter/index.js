@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import { Button, Modal } from 'react-bootstrap';
 import StartBtn from "../StartBtn"
 import CloseBtn from "../CloseBtn"
@@ -7,138 +7,107 @@ import io from 'socket.io-client'
 
 import "./style.css";
 
-class WritingCenter extends Component {
-    state = {
-        showModal: false,
-        showTextModal: false,
-        timer: 120,
-        timerId: "",
-        timerStart: false,
-        sentence: "",
-        isLoaded: false,
-        currentSentences: [], 
+
+function WritingCenter(props){
+    const [showModal, setShowModal] = useState(false)
+    const [showTextModal, setTextModal] = useState(false)
+    const [timer, setTimer] = useState(120)
+    const [startTimer, setStartTimer] = useState(false)
+    const [timerId, setTimerId] = useState("")
+    const [sentence, setSentence] = useState("")
+
+
+    const handleModal = () => {
+        setShowModal(!showModal)
     }
 
-
-    handleModal = () => {
-        this.setState({
-            showModal: !this.state.showModal
-        })
+   const handleTextModal = () => {
+        setTextModal(!showTextModal)
     }
 
-    handleTextModal = () => {
-        this.setState({
-            showTextModal: !this.state.showTextModal,
-            isEditing: false
-        })
-
-    }
-
-    handleInputChange = (event) => {
-        this.setState({
-          sentence: event.target.value
-        });
+   const handleInputChange = (event) => {
+        setSentence(event.target.value)
     };
 
-    handleSentenceSave = () => {
-        this.stopTimer()
-        this.setState({
-            sentence: "",
-            showTextModal: !this.state.showTextModal,
-          });
+   const handleSentenceSave = () => {
+        stopTimer()
+        setSentence("")
+        setTextModal(!showTextModal)
 
-          this.props.setIsEditing("isEditing", false)
+        props.setIsEditing("isEditing", false)
 
           API.saveSentence({
-            sentence: this.state.sentence,
+            sentence,
             author: "someone new"
           })
             .catch(err => console.log(err));
 
-            window.location.reload()
+            // window.location.reload()
     }
 
-    handleStart = () => {
-        this.setState({
-            showTextModal: !this.state.showTextModal,
-        })
-        // this.startTimer()
-    }
-    
-    startTimer = () => {
-        const timerId = setInterval(() => {
-            this.setState({
-                timer: this.state.timer - 1
-            })
-            }, 1000)
-
-            this.setState({
-                timerId
-            })
+   const handleStart = () => {
+        setTextModal(!showTextModal)
+        setStartTimer(true)
     }
 
-    stopTimer = () => {
-        clearInterval(this.state.timerId)
-        this.setState({
-            timer: 120
-        })
-    }
+     useEffect(() => {
+        let interval = null;
 
-    checkTimer = () => {
-        if (this.state.timer <= 0) {
-            this.stopTimer()
-            this.setState({
-                showTextModal: !this.state.showTextModal,
-            })
+        if (startTimer) {
+            interval = setInterval(() => {
+            setTimer(timer => timer - 1);
+            }, 1000);
+        } else if (!startTimer && timer === 0) {
+            clearInterval(interval);
+            setTextModal(!showTextModal)
         }
+        
+        return () => clearInterval(interval);
+
+        }, [startTimer, timer]);
+
+   const stopTimer = () => {
+        setStartTimer(false)
+        setTimer(120)
     }
 
-    // checkStatus = () => {
-    //     if() {
-
-    //     }
-    // }
-
-
-render() {  
-    this.checkTimer()
     
     return (
         <div>
              <p className="misson">Now that you've logged in, have you thought of a sentance you'd like to add? You only get one chances so make it count! Use our dictionary and thesaurus resources if you need help!</p>
             <div className="container">
                 <Button 
-                onClick={this.handleModal} 
+                onClick={() => handleModal()} 
                 className="firstModal mainBtn white"
                 size="lg"
                 >Let's Get Started</Button>
                 <Modal
                 className="d-flex flex-column align-items-center" 
-                show={this.state.showModal} 
-                onHide={this.handleModal}>
+                show={showModal} 
+                onHide={() => handleModal()}>
                     <Modal.Header closeButton>
                         <Modal.Title>Now when you click the start button you will be able to add your sentence in here.</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <p>Click this start button and you will have 2 mins.</p>
                         <StartBtn 
-                        onHandleClick={this.handleStart}
-                        setIsEditing={this.props.setIsEditing}
-                        book={this.props.book}
+                        onHandleClick={() => handleStart()}
+                        setIsEditing={props.setIsEditing}
+                        book={props.book}
                         ></StartBtn>
                     </Modal.Body>
                     <Modal.Footer>
-                    <Button variant="danger" onClick={this.handleModal}>
+                    <Button variant="danger" onClick={() => handleModal()}>
                         Close
                     </Button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={this.state.showTextModal} onHide={this.handleTextModal}>
+                <Modal show={showTextModal} onHide={() => handleTextModal()}>
                     <Modal.Header closeButton>
                         <Modal.Title>
                             <p>Add your sentence here</p>
-                            <div>Time Remaining: {this.state.timer} seconds</div>
+                            <div>Time Remaining: {timer} seconds</div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -149,7 +118,7 @@ render() {
                             required="true" 
                             maxlength="160" 
                             className="form-control"
-                            onChange={this.handleInputChange}
+                            onChange={(event) => handleInputChange(event)}
                             />
                         </div>
                     </Modal.Body>
@@ -157,12 +126,15 @@ render() {
                     {/* <Button variant="success" className="white" onClick={this.handleSentenceSave}>
                         Save!
                     </Button> */}
-                    <CloseBtn  onHandleClick={this.handleSentenceSave}></CloseBtn>
+                    <CloseBtn  
+                    onHandleClick={() => handleSentenceSave()}
+                    book={props.book}
+                    ></CloseBtn>
                     </Modal.Footer>
                 </Modal>
             </div>
         </div>
-    )}}
+    )}
 
 export default WritingCenter;
 

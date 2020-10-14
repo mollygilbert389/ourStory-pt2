@@ -9,7 +9,6 @@
 ## Description
 This application is a community writing experiment. Inspired by [Reddit Place](https://www.youtube.com/watch?v=XnRCZK3KjUY) we wanted to achieve something with words. This app was created with React, Express, Node, Redux, Socket io, and Auth0. 
 
-
 ## Installation
 * react
 * react-bootstrap 
