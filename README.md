@@ -16,7 +16,7 @@ https://coolstorybr0.herokuapp.com/
 Images of the updated Application: 
 ![ourStorypt2Login](https://user-images.githubusercontent.com/29104770/96006768-6eb55380-0e03-11eb-8c61-f0352a9a14f8.gif)
 ![ourStorypt2Dictionary](https://user-images.githubusercontent.com/29104770/96006771-6f4dea00-0e03-11eb-8771-b49513095d9a.gif)
-![Ourstorypt2GetStarted](https://user-images.githubusercontent.com/29104770/96006430-18481500-0e03-11eb-9248-f0cebe2b6764.gif)
+![addingpat1](https://user-images.githubusercontent.com/29104770/96012176-77a92380-0e09-11eb-9b8b-a643fda8fa51.gif)
 
 ## Installation
 * react
