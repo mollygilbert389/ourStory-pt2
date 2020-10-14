@@ -7,7 +7,16 @@
   - [Questions](#questions)
 
 ## Description
+
 This application is a community writing experiment. Inspired by [Reddit Place](https://www.youtube.com/watch?v=XnRCZK3KjUY) we wanted to achieve something with words. This app was created with React, Express, Node, Redux, Socket io, and Auth0. 
+
+THIS SITE IS UNDER CONTRCUTION. This is a code refractor of the following project: 
+https://coolstorybr0.herokuapp.com/
+
+Images of the updated Application: 
+![ourStorypt2Login](https://user-images.githubusercontent.com/29104770/96006768-6eb55380-0e03-11eb-8c61-f0352a9a14f8.gif)
+![ourStorypt2Dictionary](https://user-images.githubusercontent.com/29104770/96006771-6f4dea00-0e03-11eb-8771-b49513095d9a.gif)
+![Ourstorypt2GetStarted](https://user-images.githubusercontent.com/29104770/96006430-18481500-0e03-11eb-9248-f0cebe2b6764.gif)
 
 ## Installation
 * react
