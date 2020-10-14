@@ -13,7 +13,6 @@ function WritingCenter(props){
     const [showTextModal, setTextModal] = useState(false)
     const [timer, setTimer] = useState(120)
     const [startTimer, setStartTimer] = useState(false)
-    const [timerId, setTimerId] = useState("")
     const [sentence, setSentence] = useState("")
 
 
@@ -50,7 +49,7 @@ function WritingCenter(props){
         setStartTimer(true)
     }
 
-     useEffect(() => {
+    useEffect(() => {
         let interval = null;
 
         if (startTimer) {
@@ -64,7 +63,7 @@ function WritingCenter(props){
         
         return () => clearInterval(interval);
 
-        }, [startTimer, timer]);
+    }, [startTimer, timer]);
 
    const stopTimer = () => {
         setStartTimer(false)

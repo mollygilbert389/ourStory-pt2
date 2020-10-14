@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux"
 import {bindActionCreators} from "redux"
 import Book from "../components/Book"
@@ -13,63 +13,77 @@ import {
   setIsEditing,
 } from "../actions/index"
 
-class Home extends Component {
-  state = {
-    currentSentences: []
-  }
+// class Home extends Component {
+  // state = {
+  //   currentSentences: []
+  // }
 
-  componentDidMount() {
-    function loadSentences() {
+  function Home(props){
+    const [sentences, setSentences] = useState([])
+
+//   const something = () => {
+//     function loadSentences() {
+//     API.getSentences()
+//       .then(res => res.data)
+//       .then(
+//         (result) => {
+//           this.setState({
+//             isLoaded: true,
+//             currentSentences: result
+//           });
+//         },
+//         (error) => {
+//           this.setState({
+//             isLoaded: true,
+//             error
+//           });
+//         }
+//       )
+//       .catch(err => console.log(err));
+//     }
+    
+//     loadSentences.call(this)
+// }
+
+  useEffect(() => {
     API.getSentences()
       .then(res => res.data)
       .then(
         (result) => {
-          this.setState({
-            isLoaded: true,
-            currentSentences: result
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+          setSentences(result)
+          // this.setState({
+          //   isLoaded: true,
+          //   currentSentences: result
+          // });
+        })
       .catch(err => console.log(err));
-    }
-    
-    loadSentences.call(this)
-}
+  }, [setSentences, sentences]);
 
-setIsEditing = (destination, value) => {
-  const{onSetIsEditing}=this.props
+const setIsEditing = (destination, value) => {
+  const{onSetIsEditing}=props
   onSetIsEditing(destination, value)
 }
 
-  render() {
-    
   return (
     <div>
-      {!this.props.book.userData.name && (<div className="misson">Welcome to OurStory! This is a community book writing experiment where users from all over can come and make a single contribution to the book below. You can stay here and read OurStory, or you can sign in and make your own contribution!</div>)}
+      {!props.book.userData.name && (<div className="misson">Welcome to OurStory! This is a community book writing experiment where users from all over can come and make a single contribution to the book below. You can stay here and read OurStory, or you can sign in and make your own contribution!</div>)}
       <div className="centerItems">
         <Login></Login>
       </div>
       
-      {this.props.book.userData.name && (<div>
+      {props.book.userData.name && (<div>
         <Dictionary></Dictionary> 
         <WritingCenter
-        setIsEditing={this.setIsEditing}
-        book={this.props.book}
+        setIsEditing={setIsEditing}
+        book={props.book}
         ></WritingCenter>
         </div>)}
       <Book
-      bookData={this.state.currentSentences}
+      bookData={sentences}
       >
       </Book>
     </div>
   );
-}
 }
 
 const mapStateToProps = (state) => {
