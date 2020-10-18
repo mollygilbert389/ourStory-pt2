@@ -1,33 +1,18 @@
-import React, {useState} from "react";
-import {Button} from "react-bootstrap";
-// import io from "socket.io-client"
+// import React, {useState} from "react";
+// import {Button} from "react-bootstrap";
 
-// let socket;
-
-function CloseBtn(props){
-    // const ENDPOINT = "localhost:3000"
-    // const [message, setMessage] = useState('')
+// function CloseBtn(props){
     
-    const handleClick = () => {
-        // socket = io(ENDPOINT)
-        console.log("is clicked")
-        props.onHandleClick()
-        // socket.emit('checkStart', {isEditing:false}, () => {})
-        // socket.emit("disconnet")
-        // socket.off()
-        // socket.on('message', (message) => {
-        //      setMessage(message)
+//     const handleClick = () => {
+//         console.log("is clicked")
+//         props.onHandleClick()
+//     }
 
-        // })
-    }
+//     return (
+//         <div>
+//             <Button variant="success" className="white" onClick={() => handleClick()}>Save!</Button>
+//         </div>
+//     );
+// }
 
-    // console.log(message)
-    
-    return (
-        <div>
-            <Button variant="success" className="white" onClick={() => handleClick()}>Save!</Button>
-        </div>
-    );
-}
-
-export default CloseBtn;
+// export default CloseBtn;

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Button, Modal } from 'react-bootstrap';
-import StartBtn from "../StartBtn"
-import CloseBtn from "../CloseBtn"
+// import StartBtn from "../StartBtn"
+// import CloseBtn from "../CloseBtn"
 import API from "../../utils/API"
 import io from 'socket.io-client'
 
@@ -18,13 +18,15 @@ function WritingCenter(props){
     const [isEditing, setEditStatus] = useState(false)
     const [message, setMessage] = useState('')
     const ENDPOINT = "localhost:3000" 
+    let editStatus = props.book.isEditing
 
 
     const handleModal = () => {
         setShowModal(!showModal)
     }
 
-   const handleTextModal = () => {
+    const handleTextModalClose = () => {
+        stopTimer()
         setTextModal(!showTextModal)
     }
 
@@ -46,9 +48,25 @@ function WritingCenter(props){
             .catch(err => console.log(err));
     }
 
-   const handleStart = () => {
+   const handleStart = () => {        
+        socket = io(ENDPOINT);
+        // let isEditing;
+        
+        // if(editStatus) {
+        //     isEditing=true
+        // } else {
+        //     isEditing=false
+        // }
+
+        console.log(socket)
+
+        socket.emit('startEdit', {isEditing:true}, () => {        
+
+        })
+
         setTextModal(!showTextModal)
         setStartTimer(true)
+        props.setIsEditing("isEditing", true)
     }
 
     useEffect(() => {
@@ -72,22 +90,43 @@ function WritingCenter(props){
         setTimer(120)
     }
 
+    // useEffect(() => {
+    //     socket = io(ENDPOINT);
+    //     let isEditing;
+        
+    //     if(editStatus) {
+    //         isEditing=true
+    //     } else {
+    //         isEditing=false
+    //     }
+
+    //     console.log(socket)
+
+    //     socket.emit('checkStart', {isEditing}, () => {        
+
+    //     })
+    // }, [editStatus])
+
     useEffect(() => {
-        socket = io(ENDPOINT);
-
-        socket=io(ENDPOINT)
-        console.log(socket)
-
-        socket.emit('checkStart', {isEditing}, () => {        
-            socket.on('message', (message) => {
-                setMessage(message)
-            })
+        socket.on('message', (isEditing) => {
+            let editHappeningCheck = isEditing.message
+            
+            if(editHappeningCheck) {
+                setEditStatus(true)
+                setMessage("Sorry someone is editing right now! Try again later!")
+            }  
+            if (!editHappeningCheck) {
+                setEditStatus(false)
+                setMessage("You are good to edit!")
+            }
         })
-    }, [ENDPOINT])
+    }, [editStatus, message])
 
-    
+ 
     return (
+
         <div>
+
              <p className="misson">Now that you've logged in, have you thought of a sentance you'd like to add? You only get one chances so make it count! Use our dictionary and thesaurus resources if you need help!</p>
             <div className="container">
                 <Button 
@@ -105,23 +144,17 @@ function WritingCenter(props){
                     <Modal.Body>
                         <p>Click this start button and you will have 2 mins.</p>
 
-                        <p>{message}</p>
-                        <StartBtn 
-                        onHandleClick={() => handleStart()}
-                        // setEditStatus={() => setEditStatus()}
-                        setIsEditing={props.setIsEditing}
-                        book={props.book}
-                        disabled={isEditing}
-                        ></StartBtn>
+                        <Button className="white" onClick={() => handleStart()} disabled={editStatus}>Start</Button>
                     </Modal.Body>
                     <Modal.Footer>
+                        <div>{message}</div>
                     <Button variant="danger" onClick={() => handleModal()}>
                         Close
                     </Button>
                     </Modal.Footer>
                 </Modal>
 
-                <Modal show={showTextModal} onHide={() => handleTextModal()}>
+                <Modal show={showTextModal} onHide={() => handleTextModalClose()}>
                     <Modal.Header closeButton>
                         <Modal.Title>
                             <p>Add your sentence here</p>
@@ -141,13 +174,7 @@ function WritingCenter(props){
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                    {/* <Button variant="success" className="white" onClick={this.handleSentenceSave}>
-                        Save!
-                    </Button> */}
-                    <CloseBtn  
-                    onHandleClick={() => handleSentenceSave()}
-                    book={props.book}
-                    ></CloseBtn>
+                        <Button variant="success" className="white" onClick={() => handleSentenceSave()}>Save!</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

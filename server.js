@@ -8,30 +8,21 @@ const io = require('socket.io').listen(server);
 
 io.on("connection", (socket) => {
   console.log("new connection!")
+  // socket.on('checkStart', ({isEditing}) => {
+  //   console.log(isEditing)
+  //   socket.join('ourStory')
+
+  //     io.to('ourStory').emit('storyData', {message: isEditing})
+  //     socket.to('ourStory').emit('message', {message: isEditing})
+  // })
+  
 
   socket.on('checkStart', ({isEditing}) => {
     console.log(isEditing)
     socket.join('ourStory')
 
-    let checkMessage = ''
-    let disabled=false
-        
-        if(isEditing) {
-          checkMessage = "Sorry someone is currently editing. Try again later."
-          disabled=true
-        }
-
-        if (!isEditing) {
-          checkMessage = "You are good to edit!"
-          disabled=false
-        }
-
-        io.to('ourStory').emit('storyData', {message: checkMessage, disabled: disabled})
-        socket.to('ourStory').emit('message', {message: checkMessage, disabled})
-
-      //   socket.on("disconnect", () => {
-      //   console.log("we lost a connection!")
-      // })
+      io.to('ourStory').emit('storyData', {message: isEditing})
+      socket.to('ourStory').emit('message', {message: isEditing})
   })
 
   socket.on("disconnect", () => {
