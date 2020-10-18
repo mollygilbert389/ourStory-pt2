@@ -15,10 +15,10 @@ function WritingCenter(props){
     const [timer, setTimer] = useState(120)
     const [startTimer, setStartTimer] = useState(false)
     const [sentence, setSentence] = useState("")
-    const [isEditing, setEditStatus] = useState(false)
+    const [editStatus, setEditStatus] = useState(false)
     const [message, setMessage] = useState('')
     const ENDPOINT = "localhost:3000" 
-    let editStatus = props.book.isEditing
+    // let reduxEditStatus = props.book.isEditing
 
 
     const handleModal = () => {
@@ -51,6 +51,7 @@ function WritingCenter(props){
     }
 
    const handleStart = () => {
+        setEditStatus(true)
         setTextModal(!showTextModal)
         setStartTimer(true)
         props.setIsEditing("isEditing", true)
@@ -80,6 +81,7 @@ function WritingCenter(props){
     useEffect(() => {
         socket = io(ENDPOINT);
         let isEditing;
+        console.log(editStatus)
         
         if(editStatus) {
             isEditing=true
@@ -92,7 +94,7 @@ function WritingCenter(props){
         socket.emit('checkStart', {isEditing}, () => {        
 
         })
-    }, [ENDPOINT, editStatus])
+    }, [editStatus])
 
     useEffect(() => {
         socket.on('message', (isEditing) => {
