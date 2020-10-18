@@ -8,15 +8,6 @@ const io = require('socket.io').listen(server);
 
 io.on("connection", (socket) => {
   console.log("new connection!")
-  // socket.on('checkStart', ({isEditing}) => {
-  //   console.log(isEditing)
-  //   socket.join('ourStory')
-
-  //     io.to('ourStory').emit('storyData', {message: isEditing})
-  //     socket.to('ourStory').emit('message', {message: isEditing})
-  // })
-  
-
   socket.on('checkStart', ({isEditing}) => {
     console.log(isEditing)
     socket.join('ourStory')

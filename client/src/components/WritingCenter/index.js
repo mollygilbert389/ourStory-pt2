@@ -26,6 +26,7 @@ function WritingCenter(props){
     }
 
     const handleTextModalClose = () => {
+        setEditStatus(false)
         stopTimer()
         setTextModal(!showTextModal)
     }
@@ -35,6 +36,7 @@ function WritingCenter(props){
     };
 
    const handleSentenceSave = () => {
+        setEditStatus(false)
         stopTimer()
         setSentence("")
         setTextModal(!showTextModal)
@@ -48,22 +50,7 @@ function WritingCenter(props){
             .catch(err => console.log(err));
     }
 
-   const handleStart = () => {        
-        socket = io(ENDPOINT);
-        // let isEditing;
-        
-        // if(editStatus) {
-        //     isEditing=true
-        // } else {
-        //     isEditing=false
-        // }
-
-        console.log(socket)
-
-        socket.emit('startEdit', {isEditing:true}, () => {        
-
-        })
-
+   const handleStart = () => {
         setTextModal(!showTextModal)
         setStartTimer(true)
         props.setIsEditing("isEditing", true)
@@ -90,32 +77,34 @@ function WritingCenter(props){
         setTimer(120)
     }
 
-    // useEffect(() => {
-    //     socket = io(ENDPOINT);
-    //     let isEditing;
+    useEffect(() => {
+        socket = io(ENDPOINT);
+        let isEditing;
         
-    //     if(editStatus) {
-    //         isEditing=true
-    //     } else {
-    //         isEditing=false
-    //     }
+        if(editStatus) {
+            isEditing=true
+        } else {
+            isEditing=false
+        }
 
-    //     console.log(socket)
+        console.log(socket)
 
-    //     socket.emit('checkStart', {isEditing}, () => {        
+        socket.emit('checkStart', {isEditing}, () => {        
 
-    //     })
-    // }, [editStatus])
+        })
+    }, [ENDPOINT, editStatus])
 
     useEffect(() => {
         socket.on('message', (isEditing) => {
             let editHappeningCheck = isEditing.message
             
             if(editHappeningCheck) {
+                console.log("Cannot edit")
                 setEditStatus(true)
                 setMessage("Sorry someone is editing right now! Try again later!")
             }  
             if (!editHappeningCheck) {
+                console.log("Can edit")
                 setEditStatus(false)
                 setMessage("You are good to edit!")
             }
